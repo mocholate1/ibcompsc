@@ -1,0 +1,248 @@
+nav {
+    position: fixed;
+    z-index: 9000;
+}
+
+nav .brand-logo {
+    font-size: 1.4rem;
+}
+
+.sidenav {
+    z-index: 9999;
+}
+
+h1 {
+    font-size: 3.4rem;
+}
+
+body {
+    background-image: url('../assets/img/lukas-blazek-1600.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.main {
+    display: block;
+    box-sizing: border-box;
+    padding-top: 64px;
+    min-height: calc(100vh - 253px);
+}
+
+#login-form {
+    padding: 30px;
+}
+
+.flashes {
+    width: 90%;
+    margin: 20px auto;
+    padding: 2px;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 4px;
+}
+
+.error {
+    background-color: #ffdbdb;
+    border: 1px solid #c14747;
+}
+
+.success {
+    background-color: #dbffde;
+    border: 1px solid #21962a;
+}
+
+.content-container {
+    border-radius: 8px;
+}
+
+.submit-btn {
+    display: block;
+    margin: 0 auto;
+}
+
+a.submit-btn {
+    width: 100px;
+}
+
+#recipe-search {
+    padding: 14px;
+}
+
+.author-text {
+    font-size: 13px;
+}
+
+div.card-image {
+    height: 240px;
+    width: 100%;
+}
+
+.card .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fab {
+    font-size: 1.6rem;
+}
+
+.add-ingredient-btn,
+.remove-ingredient-btn,
+.add-step-btn,
+.remove-step-btn {
+    margin: 4px;
+}
+
+hr {
+    margin-bottom: 36px;
+}
+
+#cuisine-select {
+    margin-left: 20px;
+}
+
+a.btn-floating.btn-large.add-recipe-btn {
+    position: fixed;
+    right: 5%;
+    top: 85%;
+}
+
+#like-recipe-btn {
+    cursor: pointer;
+}
+
+.like-active {
+    color: #00897b !important;
+}
+
+ol>li {
+    margin-bottom: 10px;
+}
+
+.pagination li.active {
+    background-color: #00897b !important;
+}
+
+.ingredients-list li {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+/* Utility classes*/
+.lrg-paragraph-txt {
+    font-size: 1.2rem;
+}
+
+.sml-paragraph-txt {
+    font-size: 0.9rem;
+}
+
+.m-4 {
+    margin: 4px;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mt-40 {
+    margin-top: 40px;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-40 {
+    margin-bottom: 40px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.ml-20 {
+    margin-left: 20px;
+}
+
+.ml-40 {
+    margin-left: 40px;
+}
+
+.pl-10 {
+    padding-left: 10px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.px-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.height-40 {
+    height: 40px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+/* Media Queries */
+@media screen and (min-width: 993px) {
+    
+    nav .brand-logo {
+        margin-left: 60px;
+        font-size: 2rem;
+    }
+    
+}
+
+@media screen and (max-width: 600px) {
+    
+    .add-recipe-btn {
+        margin-top: 32px;
+    }
+    
+    .s-mt-20 {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 757px) {
+    
+    .btn, .btn-large, .btn-small, .btn-flat {
+        padding: 0 6px;
+    }
+    
+}

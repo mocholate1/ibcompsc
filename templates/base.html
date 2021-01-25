@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Open Cookbook</title>
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize - Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="teal darken-1">
+        <div class="nav-wrapper">
+            <a href="{{ url_for('home') }}" class="brand-logo">The Open Cookbook</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ url_for('recipelist') }}">Recipes</a></li>
+                {% if user %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li><a href="{{ url_for('home') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <!-- Mobile sidebar -->
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="{{ url_for('recipelist') }}">Recipes</a></li>
+        {% if user%}
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            <li><a href="{{ url_for('home') }}">Login</a></li>
+        {% endif %}
+    </ul>
+    
+    
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="row">
+                
+                {% block content %}
+                {% endblock %}
+                
+            </div>
+        </div>
+    </main>
+
+    
+    <footer class="page-footer mt-40 teal">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h6 class="white-text">The Open Cookbook</h6>
+                    <p class="grey-text text-lighten-4">A collaborative cookbook where you can read and create recipes for the community</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h6 class="white-text">Links</h6>
+                    <ul>
+                        {% if user %}
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('recipelist') }}">Recipes</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('logout') }}">Logout</a></li>
+                        {% else %}
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('signup') }}">Sign Up</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('home') }}">Login</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ url_for('recipelist') }}">Recipes</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2019 Keith Scully
+                <a class="grey-text text-lighten-4 right" href="https://github.com/kes2401/online-cookbook" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Materialize - Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Main JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

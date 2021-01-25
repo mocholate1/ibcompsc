@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <header class="header-text center-align teal-text text-darken-4">
+        <h1>Welcome to The Open Cookbook</h1>
+        <p class="lrg-paragraph-txt"><strong>Click the Recipes button above to browse recipes or sign up below to access full site features</strong></p>
+    </header>
+    <div class="container col s10 m6 offset-s1 offset-m3 grey lighten-5 content-container" id="login-form">
+        <div class="row">
+            <h4 class="center-align teal-text text-darken-4">Sign Up</h4>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="flashes {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('signup') }}" method="POST">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix teal-text text-darken-1">account_circle</i>
+                    <input id="username" name="username" type="text" class="validate" autocomplete="off" minlength="6" maxlength="16" pattern="^[a-zA-Z0-9]*$" autofocus>
+                    <label for="username">Username</label>
+                    <span class="helper-text" data-error="There's something wrong here..." data-success="This looks ok!">Up to 16 alphanumeric characters allowed (minimum 6), no spaces</span>
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix teal-text text-darken-1">email</i>
+                    <input id="email" name="email" type="email" class="validate" autocomplete="off">
+                    <label for="email">Email</label>
+                    <span class="helper-text" data-error="There's something wrong here..." data-success="This looks ok!">Enter a valid email address</span>
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix teal-text text-darken-1">lock_open</i>
+                    <input id="password" type="password" name="password" class="validate" minlength="8" maxlength="16" pattern='^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$'>
+                    <label for="password">Password</label>
+                    <span class="helper-text" data-error="There's something wrong here..." data-success="This looks ok!">Must be 8-16 characters long, of alphanumeric and special characters</span>
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix teal-text text-darken-1">lock_outline</i>
+                    <input id="password-reconfirm" name="password-reconfirm" type="password" class="validate" minlength="8" maxlength="16" pattern='^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$'>
+                    <label for="password-reconfirm">Re-Confirm Password</label>
+                    <span class="helper-text" data-error="There's something wrong here..." data-success="This looks ok!">Must be 8-16 characters long, of alphanumeric and special characters</span>
+                </div>
+                <button class="btn waves-effect waves-light submit-btn" type="submit" name="action">Submit</button>
+            </form>
+            <p class="center-align teal-text text-darken-4 sml-paragraph-txt mt-20">Already signed up? Log in <a href="{{ url_for('home') }}">Here</a></p>
+        </div>
+    </div>
+    
+{% endblock %}

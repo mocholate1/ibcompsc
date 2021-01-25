@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header class="header-text center-align teal-text text-darken-4">
+        <h1>Recipe List</h1>
+        <p class="lrg-paragraph-txt"><strong>Search, sort, filter and add recipes</strong></p>
+    </header>
+    
+    <div class="container col s12 m10 offset-m1 grey lighten-5 content-container" id="recipe-search">
+        <div class="row mb-10">
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="flashes {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            
+            <form>
+                <div class="col s7 m4">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix teal-text text-darken-1">search</i>
+                        <input id="recipe_search" name="recipe_search" type="text" autocomplete="off">
+                        <label for="recipe_search">Search</label>
+                    </div>
+                </div>
+                <div class="col s5 m2">
+                    <button class="btn waves-effect waves-light submit-btn mt-20" type="submit" id="recipe-search-btn">Search</button>
+                </div>
+            </form>
+            
+            <form>
+                <div class="col s7 m4">
+                    <div class="input-field col s12" id="cuisine-select">
+                        <select id="cuisine-filter" name="cuisine_select">
+                            <option value="" disabled selected>Cuisine</option>
+                            {% for cuisine in cuisines %}
+                            <option value="{{ cuisine.cuisine_name }}">{{ cuisine.cuisine_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="cuisine-filter">Filter by Cuisine</label>
+                    </div>
+                </div>
+                <div class="col s5 m2">
+                    <button class="btn waves-effect waves-light submit-btn mt-20" type="submit" id="cusine-filter-btn">Filter</button>
+                </div>
+            </form>
+            
+        </div>
+        <div class="row mb-10">
+            <div class="col s12 m6 center-align">
+                <form>
+                    <p class="teal-text text-darken-4">Sort All Recipes By: </p>
+                    <button class="btn waves-effect waves-light btn-small" type="submit" name="sort" value="votes">Votes</button>
+                    <button class="btn waves-effect waves-light btn-small" type="submit" name="sort" value="asc">A-Z</button>
+                    <button class="btn waves-effect waves-light btn-small" type="submit" name="sort" value="dsc">Z-A</button>
+                </form>
+            </div>
+            
+            <div class="col s12 m6 grey-text text-darken-2 center-align s-mt-20">
+                <a href="{{ url_for('recipelist') }}" class="waves-effect waves-light btn-small ml-20">Reset</a>
+                <p class="mt-30"><strong>
+                {% if recipes|length <= 0 %}
+                    0 Results found...
+                {% elif recipes|length == 1 %}
+                    1 Result found...
+                {% else %}
+                    {{recipes|length}} Results found...
+                {% endif %}
+                </strong></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container col s12 m10 offset-m1 grey-text text-darken-2 content-container mt-20">
+        <div class="row">
+            
+            {% if recipes|length <= 0 %}
+                <p class="grey-text text-darken-4 center-align"><strong>There are no recipes matching this criteria</strong></p>
+            {% else %}
+                {% for recipe in recipes %}
+                <div class="col s12 m6 l6 xl4 recipe-card">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ recipe.image_url }}" alt="{{ recipe.recipe_name }}">
+                        </div>
+                        <div class="card-content">
+                            <h6>{{ recipe.recipe_name}}</h6>
+                            <p class="grey-text">{{ recipe.cuisine }}</p>
+                            <p class="p-10"><i class="small material-icons grey-text">thumb_up</i><label class="grey-text text-darken-2"><strong>{{ recipe.liked_by|length }}</strong></label></p>
+                            <p class="grey-text author-text">By: <span class="grey-text text-darken-3">{{ recipe.author }}</span></p>
+                        </div>
+                        <div class="card-action">
+                            <a href="/recipe/{{ recipe._id }}" class="waves-effect waves-light btn-small m-4">View</a>
+                            {% if user == recipe.author %}
+                                <a href="/edit_recipe/{{ recipe._id }}" class="waves-effect waves-light btn-small blue darken-2 m-4"><i class="small material-icons">edit</i></a>
+                                <a href="#warning" data-target="warning-{{ recipe._id }}" class="waves-effect waves-light btn-small red darken-2 m-4 modal-trigger"><i class="small material-icons">delete</i></a>
+                                <div id="warning-{{ recipe._id }}" class="modal">
+                                    <div class="modal-content">
+                                        <h4>Delete Recipe</h4>
+                                        <p>Are you sure you want to delete this recipe?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#!" class="modal-close waves-effect waves-light btn-small">Back</a>
+                                        <a href="/delete_recipe/{{ recipe._id }}" class="waves-effect waves-light btn-small red darken-2">Yes, Delete</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        {% if recipes|length > 6 %}
+            <div class="center-align">
+                <ul class="pagination">
+                    <li id="prev-page" class="disabled"><a href="javascript:void(0)" aria-label="Previous"><i class="material-icons">chevron_left</i></a></li>
+                </ul>
+            </div>
+        {% endif %}
+        
+    </div>
+    
+    {% if user %}
+        <a href="{{ url_for('add_recipe') }}" class="btn-floating btn-large waves-effect waves-light z-depth-4 add-recipe-btn"><i class="material-icons">add</i></a>
+    {% endif %}
+    
+{% endblock %}

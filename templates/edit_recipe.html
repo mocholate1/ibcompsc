@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <header class="header-text center-align teal-text text-darken-4">
+        <h1>Edit Recipe</h1>
+    </header>
+    <div class="container col s12 m10 offset-m1 grey lighten-5 content-container" id="login-form">
+        <div class="row">
+            <form action="{{ url_for('update_recipe', recipe_id=recipe._id) }}" method="POST">
+                <!-- Recipe name section -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="recipe_name" name="recipe_name" type="text" class="validate" autocomplete="off" value="{{ recipe.recipe_name }}" maxlength="24" autofocus required>
+                        <label for="recipe_name">Recipe Name</label>
+                    </div>
+                </div>
+                
+                <!-- Recipe cuisine and image URL section -->
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <select id="cuisine" name="cuisine" required>
+                            <option value="" disabled>Select Cuisine</option>
+                            {% for cuisine in cuisines %}
+                                {% if cuisine.cuisine_name == recipe.cuisine %}
+                                    <option value="{{ cuisine.cuisine_name }}" selected>{{ cuisine.cuisine_name }}</option>
+                                {% else %}
+                                    <option value="{{ cuisine.cuisine_name }}">{{ cuisine.cuisine_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <label for="cuisine">Cuisine</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input id="image_url" type="url" name="image_url" autocomplete="off" value="{{ recipe.image_url }}">
+                        <label for="image_url">Image URL</label>
+                        <span class="helper-text">Enter full valid URL to image, or leave blank if no image available</span>
+                    </div>
+                </div>
+                
+                <!-- Allergens selection section -->
+                <div class="row">
+                    <div class="allergens mb-20">
+                        <h5 class="mb-10 center-align teal-text text-darken-4"><strong>Allergens</strong></h5>
+                        {% for allergen in allergens %}
+                        <div class="input-field col s6 m3 mt-0 mb-0 height-40">
+                            <p>
+                              <label>
+                                {% if allergen.allergen_name in recipe.allergens %}
+                                <input type="checkbox" class="filled-in" name="{{ allergen.allergen_name }}" checked="checked"/>
+                                {% else %}
+                                <input type="checkbox" class="filled-in" name="{{ allergen.allergen_name }}"/>
+                                {% endif %}
+                                <span>{{ allergen.allergen_name }}</span>
+                              </label>
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <hr class="mb-40">
+                
+                <!-- Ingredients section -->
+                <div class="row">
+                    <div class="ingredients">
+                        <h5 class="mb-20 center-align teal-text text-darken-4"><strong>Ingredients</strong></h5>
+                        
+                        {% for ing in recipe.ingredients %}
+                        <div class="ingredient">
+                            <div class="input-field col s4">
+                                <input id="quantity" name="ingredient-qty-{{ loop.index }}" type="text" class="validate" value="{{ ing[0] }}" autocomplete="off" required>
+                                <label for="quantity">Quantity</label>
+                            </div>
+                            <div class="input-field col s8">
+                                <select class="ingredient-list" name="ingredient-name-{{ loop.index }}" required>
+                                    <option value="" disabled>Select Ingredient</option>
+                                    {% for ingredient in ingredients %}
+                                        {% if ingredient.ingredient_name == ing[1] %}
+                                            <option value="{{ ingredient.ingredient_name }}" selected>{{ ingredient.ingredient_name }}</option>
+                                        {% else %}
+                                            <option value="{{ ingredient.ingredient_name }}">{{ ingredient.ingredient_name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+                        {% endfor %}
+ 
+                    </div>
+                    <div class="row">
+                        <div class="col s12" id="ingredients-buttons">
+                            <div class="col s12 m6 l4">
+                                <a class="waves-effect waves-light btn-floating btn-small add-ingredient-btn" name="add-ing-btn"><i class="material-icons left">add</i></a>
+                                <label for="add-ing-btn">Add Next Ingredient</label>
+                            </div>
+                            <div class="col s12 m6 l4">
+                                <a class="waves-effect waves-light btn-floating btn-small remove-ingredient-btn" name="remove-ing-btn"><i class="material-icons left">remove</i></a>
+                                <label for="remove-ing-btn">Remove Last Ingredient</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="mb-40">
+                
+                <!-- Method section -->
+                <div class="row">
+                    <div class="method">
+                        <h5 class="mb-0 center-align teal-text text-darken-4"><strong>Method</strong></h5>
+                        <div class="input-field col s12 mt-0">
+                            <ol id="steps-list" class="mt-10">
+                                
+                                {% for step in recipe.method %}
+                                <li class="step">
+                                    <input name="step-{{ loop.index }}" type="text" class="validate" value="{{ step }}" autocomplete="off" required>
+                                </li>
+                                {% endfor %}
+                                
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col s12" id="method-buttons">
+                            <div class="col s12 m6 l4">
+                                <a class="waves-effect waves-light btn-floating btn-small add-step-btn" name="add-step-btn"><i class="material-icons left">add</i></a>
+                                <label for="add-step-btn">Add Next Step</label>
+                            </div>
+                            <div class="col s12 m6 l4">
+                                <a class="waves-effect waves-light btn-floating btn-small remove-step-btn" name="remove-step-btn"><i class="material-icons left">remove</i></a>
+                                <label for="remove-step-btn">Remove Last Step</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--Submit Recipe-->
+                <button class="btn waves-effect waves-light submit-btn" type="submit" name="action">Save Changes</button>
+                <a href="{{ url_for('recipelist') }}" class="waves-effect waves-light btn red darken-3 submit-btn mt-20">Cancel</a>
+            </form>
+        </div>
+    </div>
+    
+{% endblock %}

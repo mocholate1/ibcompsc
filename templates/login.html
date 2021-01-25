@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <header class="header-text center-align teal-text text-darken-4">
+        <h1>Welcome to The Open Cookbook</h1>
+        <p class="lrg-paragraph-txt"><strong>Click the Recipes button above to browse recipes or log in below to access full site features</strong></p>
+    </header>
+    <div class="container col s10 m6 offset-s1 offset-m3 grey lighten-5 content-container" id="login-form">
+        <div class="row">
+            <h4 class="center-align teal-text text-darken-4">Log In</h4>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="flashes {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('home') }}" method="POST">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix teal-text text-darken-1">account_circle</i>
+                    <input id="username" name="username" type="text" class="validate" maxlength="16" pattern="^[a-zA-Z0-9]*$" autofocus required>
+                    <label for="username">Username</label>
+                    <span class="helper-text" data-error="Username should be 6-16 alphanumeric characters with no spaces"></span>
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix teal-text text-darken-1">lock_open</i>
+                    <input id="password" name="password" type="password" class="validate" pattern='^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$' required>
+                    <label for="password">Password</label>
+                    <span class="helper-text" data-error="Password should be 8-16 long, made up of alphanumeric and special characters"></span>
+                </div>
+                <button class="btn waves-effect waves-light submit-btn center-align" type="submit" name="action">Submit</button>
+            </form>
+            <p class="center-align teal-text text-darken-4 sml-paragraph-txt mt-20">Not registered already? Sign up <a href="{{ url_for('signup') }}">Here</a></p>
+        </div>
+    </div>
+    
+{% endblock %}
